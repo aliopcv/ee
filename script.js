@@ -2,135 +2,14 @@
 // IQ LIVE - Main Application JavaScript Engine
 // ==========================================================================
 
-// بيانات المباريات الافتراضية المحسّنة لشعارات الأندية الكبرى والقنوات والمعلقين
-const defaultMatches = [
-    {
-        id: 1,
-        homeTeam: "ريال مدريد",
-        homeLogo: "https://upload.wikimedia.org/wikipedia/en/5/56/Real_Madrid_CF.svg",
-        awayTeam: "برشلونة",
-        awayLogo: "https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg",
-        league: "الدوري الإسباني",
-        time: new Date(Date.now()).toISOString(),
-        streamUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1",
-        server2Url: "https://www.youtube.com/embed/live_stream?channel=UEFA",
-        server3Url: "https://www.youtube.com/embed/live_stream",
-        status: "live",
-        homeScore: 2,
-        awayScore: 1,
-        channel: "beIN Sports HD 1",
-        commentator: "عصام الشوالي",
-        isFeatured: true,
-        dateCategory: "today"
-    },
-    {
-        id: 2,
-        homeTeam: "مانشستر سيتي",
-        homeLogo: "https://upload.wikimedia.org/wikipedia/en/e/eb/Manchester_City_FC_badge.svg",
-        awayTeam: "ليفربول",
-        awayLogo: "https://upload.wikimedia.org/wikipedia/en/0/0c/Liverpool_FC.svg",
-        league: "الدوري الإنجليزي",
-        time: new Date(Date.now() + 5400000).toISOString(),
-        streamUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-        server2Url: "",
-        server3Url: "",
-        status: "live",
-        homeScore: 1,
-        awayScore: 1,
-        channel: "beIN Sports Premium 1",
-        commentator: "حفيظ دراجي",
-        isFeatured: false,
-        dateCategory: "today"
-    },
-    {
-        id: 3,
-        homeTeam: "باريس سان جيرمان",
-        homeLogo: "https://upload.wikimedia.org/wikipedia/en/a/a7/Paris_Saint-Germain_F.C..svg",
-        awayTeam: "بايرن ميونخ",
-        awayLogo: "https://upload.wikimedia.org/wikipedia/commons/1/1b/FC_Bayern_M%C3%BCnchen_logo_%282017%29.svg",
-        league: "دوري أبطال أوروبا",
-        time: new Date(Date.now() + 14400000).toISOString(),
-        streamUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-        server2Url: "",
-        server3Url: "",
-        status: "upcoming",
-        homeScore: 0,
-        awayScore: 0,
-        channel: "beIN Sports HD 2",
-        commentator: "خليل البلوشي",
-        isFeatured: false,
-        dateCategory: "today"
-    },
-    {
-        id: 4,
-        homeTeam: "الهلال",
-        homeLogo: "https://upload.wikimedia.org/wikipedia/en/d/d3/Al_Hilal_SFC_logo.svg",
-        awayTeam: "النصر",
-        awayLogo: "https://upload.wikimedia.org/wikipedia/en/c/c5/Al_Nassr_FC_logo.svg",
-        league: "الدوري السعودي",
-        time: new Date(Date.now() + 21600000).toISOString(),
-        streamUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-        server2Url: "",
-        server3Url: "",
-        status: "upcoming",
-        homeScore: 0,
-        awayScore: 0,
-        channel: "SSC 1 HD",
-        commentator: "فهد العتيبي",
-        isFeatured: false,
-        dateCategory: "today"
-    },
-    {
-        id: 5,
-        homeTeam: "إنتر ميلان",
-        homeLogo: "https://upload.wikimedia.org/wikipedia/commons/0/05/FC_Internazionale_Milano_2021.svg",
-        awayTeam: "يوفنتوس",
-        awayLogo: "https://upload.wikimedia.org/wikipedia/commons/b/bc/Juventus_FC_2017_icon_%28black%29.svg",
-        league: "الدوري الإيطالي",
-        time: new Date(Date.now() - 86400000).toISOString(),
-        streamUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-        server2Url: "",
-        server3Url: "",
-        status: "finished",
-        homeScore: 3,
-        awayScore: 2,
-        channel: "AD Sports Premium 1",
-        commentator: "فارس عوض",
-        isFeatured: false,
-        dateCategory: "yesterday"
-    }
-];
+// قائمة المباريات الأولية (خالية — إدارة المباريات تتم يدويًا من لوحة التحكم)
+const defaultMatches = [];
 
 // كلمة مرور لوحة الإدارة
 const ADMIN_PASSWORD = "iq00";
 
-// قائمة الأخبار الافتراضية الأولية
-const defaultNews = [
-    {
-        id: 1,
-        title: "رسمياً: مواجهة مرتقبة الليلة في قمة مباريات الدوري الإسباني",
-        body: "تتجه أنظار عشاق كرة القدم الليلة نحو المواجهة القوية الحاسمة في الدوري الإسباني، حيث يتطلع كلا الفريقين لتحقيق نقاط المباراة الثلاث وتعزيز موقعهما في ترتيب الجدول مع تقارب النقاط وصراع الصدارة المشتعل.",
-        image: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=500&auto=format&fit=crop&q=80",
-        category: "عاجل",
-        date: "منذ 15 دقيقة"
-    },
-    {
-        id: 2,
-        title: "تقارير: اكتمال صفوف الفريقين وزيادة حدة التحضيرات للتصفيات",
-        body: "أفادت المصادر الرياضية المطلعة بإتمام جميع الاستعدادات وتوافر جميع النجوم الأساسيين لخوض اللقاء المرتقب وسط حماس كبير من الجماهير في المدرجات والتوقعات بتقديم مباراة هجومية عالية المستوى.",
-        image: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=500&auto=format&fit=crop&q=80",
-        category: "انتقالات",
-        date: "منذ ساعة"
-    },
-    {
-        id: 3,
-        title: "مؤتمر صحفي: المدرب يؤكد الجاهزية الكاملة لحصد الفوز",
-        body: "أكد المدرب خلال المؤتمر الصحفي المنعقد صباح اليوم على ثقته الكاملة في قدرات اللاعبين وحرصهم على تقديم أفضل أداء لإسعاد الجماهير المتابعة وتحقيق النتيجة الإيجابية المطلوبة.",
-        image: "",
-        category: "تصريحات",
-        date: "منذ 3 ساعات"
-    }
-];
+// قائمة الأخبار الأولية (خالية — إدارة الأخبار تتم يدويًا من لوحة التحكم)
+const defaultNews = [];
 
 // حالة التطبيق الداخلية
 let matches = JSON.parse(localStorage.getItem('iqLiveMatches')) || defaultMatches;
