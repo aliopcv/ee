@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عراق لايف — لوحة تحكم الإدارة</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --accent-emerald: #00ff87;
+            --accent-cyan: #00f0ff;
+            --live-red: #ff2a5f;
+            --bg-dark: #05080f;
+            --bg-card: rgba(10, 14, 24, 0.92);
+            --text-primary: #f0f4ff;
+            --text-secondary: #6b7a99;
+            --glass-border: rgba(0, 255, 135, 0.15);
+            --glow-shadow: 0 0 30px rgba(0, 255, 135, 0.15);
+        }
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: var(--bg-dark);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+        .bg-layer {
+            position: fixed;
+            inset: 0;
+            background: url('admin-bg.png') center/cover no-repeat;
+            opacity: 0.18;
+            z-index: 0;
+        }
+        .bg-overlay {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(ellipse at 30% 50%, rgba(0, 255, 135, 0.06) 0%, transparent 60%),
+                        radial-gradient(ellipse at 70% 20%, rgba(0, 240, 255, 0.05) 0%, transparent 50%),
+                        linear-gradient(180deg, rgba(5,8,15,0.6) 0%, rgba(5,8,15,0.95) 100%);
+            z-index: 1;
+        }
+        .stars { position: fixed; inset: 0; z-index: 1; overflow: hidden; pointer-events: none; }
+        .star {
+            position: absolute;
+            width: 2px; height: 2px;
+            background: rgba(0, 255, 135, 0.6);
+            border-radius: 50%;
+            animation: twinkle var(--dur) ease-in-out infinite var(--delay);
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.1; transform: scale(1); }
+            50% { opacity: 0.9; transform: scale(1.4); }
+        }
+        .login-wrapper {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 440px;
+            padding: 20px;
+            animation: fadeSlideUp 0.6s ease forwards;
+        }
+        @keyframes fadeSlideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .login-card {
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 44px 40px 36px;
+            backdrop-filter: blur(24px);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.6), var(--glow-shadow);
+            text-align: center;
+            position: relative;
+        }
+        .brand-logo { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+        .logo-img-admin {
+            width: 54px; height: 54px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 15px rgba(0, 255, 135, 0.5));
+            border-radius: 12px;
+        }
+        .logo-text .iq  { font-size: 28px; font-weight: 900; color: var(--accent-emerald); letter-spacing: 1px; }
+        .logo-text .live{ font-size: 28px; font-weight: 900; color: var(--text-primary); letter-spacing: 1px; }
+        .admin-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: rgba(255,42,95,0.12);
+            border: 1px solid rgba(255,42,95,0.3);
+            color: var(--live-red);
+            font-size: 11px; font-weight: 700;
+            padding: 4px 12px; border-radius: 20px;
+            margin-bottom: 28px; letter-spacing: 1px;
+        }
+        .login-title { font-size: 20px; font-weight: 800; color: var(--text-primary); margin-bottom: 6px; }
+        .login-subtitle { font-size: 13px; color: var(--text-secondary); margin-bottom: 32px; }
+        .input-group { position: relative; margin-bottom: 16px; text-align: right; }
+        .input-group label { display: block; font-size: 12px; font-weight: 700; color: var(--text-secondary); margin-bottom: 8px; }
+        .input-group .field-wrap { position: relative; }
+        .input-group .field-icon {
+            position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+            color: var(--text-secondary); font-size: 15px; transition: color 0.2s;
+            pointer-events: none;
+        }
+        .styled-input {
+            width: 100%;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 13px 42px 13px 42px;
+            color: var(--text-primary);
+            font-family: 'Cairo', sans-serif;
+            font-size: 14px; font-weight: 600;
+            outline: none;
+            transition: border-color 0.25s, box-shadow 0.25s;
+            direction: rtl;
+        }
+        .styled-input:focus {
+            border-color: var(--accent-emerald);
+            box-shadow: 0 0 0 3px rgba(0, 255, 135, 0.12);
+        }
+        .styled-input:focus ~ .field-icon { color: var(--accent-emerald); }
+        .toggle-password {
+            position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+            background: none; border: none; color: var(--text-secondary);
+            cursor: pointer; font-size: 14px; padding: 4px; transition: color 0.2s;
+        }
+        .toggle-password:hover { color: var(--accent-emerald); }
+        .login-btn {
+            width: 100%; padding: 14px;
+            background: linear-gradient(135deg, var(--accent-emerald), #00c96a);
+            color: #000;
+            font-family: 'Cairo', sans-serif; font-size: 15px; font-weight: 900;
+            border: none; border-radius: 12px; cursor: pointer;
+            margin-top: 8px;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            transition: all 0.25s ease;
+            box-shadow: 0 6px 24px rgba(0, 255, 135, 0.3);
+        }
+        .login-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(0, 255, 135, 0.45); }
+        .login-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+        .spinner {
+            width: 18px; height: 18px;
+            border: 2px solid rgba(0,0,0,0.3); border-top-color: #000;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            display: none;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .error-msg {
+            display: none;
+            align-items: center; gap: 8px;
+            background: rgba(255,42,95,0.1); border: 1px solid rgba(255,42,95,0.25);
+            color: #ff6b8a; border-radius: 10px;
+            padding: 11px 14px; font-size: 13px; font-weight: 600;
+            margin-top: 14px; text-align: right;
+            animation: shakeX 0.4s ease;
+        }
+        .error-msg.show { display: flex; }
+        @keyframes shakeX {
+            0%,100%{transform:translateX(0)} 20%{transform:translateX(-6px)}
+            40%{transform:translateX(6px)} 60%{transform:translateX(-4px)} 80%{transform:translateX(4px)}
+        }
+        .attempts-bar { display: flex; gap: 5px; justify-content: center; margin-top: 16px; }
+        .attempt-dot {
+            width: 8px; height: 8px; border-radius: 50%;
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15);
+            transition: all 0.3s;
+        }
+        .attempt-dot.failed { background: var(--live-red); border-color: var(--live-red); box-shadow: 0 0 6px var(--live-red); }
+        .divider { display: flex; align-items: center; gap: 12px; margin: 24px 0 0; }
+        .divider-line { flex: 1; height: 1px; background: rgba(255,255,255,0.07); }
+        .divider-text { font-size: 11px; color: var(--text-secondary); white-space: nowrap; }
+        .back-link {
+            display: inline-flex; align-items: center; gap: 6px;
+            color: var(--text-secondary); font-size: 12px; font-weight: 600;
+            text-decoration: none; margin-top: 12px; transition: color 0.2s;
+        }
+        .back-link:hover { color: var(--accent-emerald); }
+        .lockout-overlay {
+            display: none; position: absolute; inset: 0;
+            background: rgba(5,8,15,0.96); border-radius: 20px;
+            flex-direction: column; align-items: center; justify-content: center;
+            gap: 14px; z-index: 20;
+        }
+        .lockout-overlay.show { display: flex; }
+        .lockout-icon { font-size: 48px; color: var(--live-red); animation: pulse-red 1s ease infinite; }
+        @keyframes pulse-red {
+            0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.7;transform:scale(1.08)}
+        }
+        .lockout-title { font-size: 18px; font-weight: 800; color: var(--live-red); }
+        .lockout-timer { font-size: 38px; font-weight: 900; color: var(--text-primary); font-variant-numeric: tabular-nums; }
+        .lockout-desc { font-size: 13px; color: var(--text-secondary); text-align: center; max-width: 260px; line-height: 1.6; }
+        .login-footer { text-align: center; margin-top: 24px; font-size: 11px; color: rgba(107,122,153,0.6); }
+    </style>
+</head>
+<body>
+    <div class="bg-layer"></div>
+    <div class="bg-overlay"></div>
+    <div class="stars" id="starsContainer"></div>
+
+    <div class="login-wrapper">
+        <div class="login-card">
+            <div class="lockout-overlay" id="lockoutOverlay">
+                <i class="fas fa-lock lockout-icon"></i>
+                <div class="lockout-title">تم إغلاق الدخول مؤقتاً</div>
+                <div class="lockout-timer" id="lockoutTimer">00:30</div>
+                <div class="lockout-desc">تم تجاوز الحد المسموح من المحاولات. يرجى الانتظار قبل المحاولة مجدداً.</div>
+            </div>
+
+            <div class="brand-logo">
+                <img src="logo.png" alt="عراق لايف IRAQ LIVE Logo" class="logo-img-admin">
+                <div class="logo-text"><span class="iq">عراق</span><span class="live">لايف</span></div>
+            </div>
+            <div class="admin-badge"><i class="fas fa-shield-alt"></i> ADMIN PANEL</div>
+            <h1 class="login-title">تسجيل دخول الإدارة</h1>
+            <p class="login-subtitle">أدخل بيانات الاعتماد للوصول إلى لوحة التحكم</p>
+
+            <form id="loginForm" onsubmit="handleLogin(event)" autocomplete="off">
+                <div class="input-group">
+                    <label>كلمة المرور</label>
+                    <div class="field-wrap">
+                        <input type="password" id="passwordInput" class="styled-input"
+                               placeholder="••••••••" autocomplete="current-password" required>
+                        <i class="fas fa-lock field-icon"></i>
+                        <button type="button" class="toggle-password" onclick="togglePasswordVisibility()">
+                            <i class="fas fa-eye" id="eyeIcon"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="error-msg" id="errorMsg">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span id="errorText">كلمة المرور غير صحيحة!</span>
+                </div>
+
+                <div class="attempts-bar" id="attemptsBar">
+                    <div class="attempt-dot" id="dot1"></div>
+                    <div class="attempt-dot" id="dot2"></div>
+                    <div class="attempt-dot" id="dot3"></div>
+                </div>
+
+                <button type="submit" class="login-btn" id="loginBtn">
+                    <div class="spinner" id="loginSpinner"></div>
+                    <i class="fas fa-sign-in-alt" id="loginIcon"></i>
+                    <span id="loginBtnText">دخول لوحة الإدارة</span>
+                </button>
+            </form>
+
+            <div class="divider">
+                <div class="divider-line"></div>
+                <span class="divider-text">العودة للموقع</span>
+                <div class="divider-line"></div>
+            </div>
+            <a href="index.html" class="back-link">
+                <i class="fas fa-arrow-right"></i>
+                العودة إلى الصفحة الرئيسية
+            </a>
+        </div>
+        <div class="login-footer">عراق لايف — IRAQ LIVE &copy; 2026 &mdash; لوحة التحكم الإدارية &mdash; وصول محظور للعموم</div>
+    </div>
+
+    <script>
+        // نجوم خلفية
+        (function() {
+            const c = document.getElementById('starsContainer');
+            for (let i = 0; i < 60; i++) {
+                const s = document.createElement('div');
+                s.className = 'star';
+                s.style.cssText = `top:${Math.random()*100}%;left:${Math.random()*100}%;--dur:${2+Math.random()*4}s;--delay:${Math.random()*4}s;opacity:${0.1+Math.random()*0.5};width:${1+Math.random()*2}px;height:${1+Math.random()*2}px;`;
+                c.appendChild(s);
+            }
+        })();
+
+        const ADMIN_PASSWORD  = 'iq00';
+        const MAX_ATTEMPTS    = 3;
+        const LOCKOUT_SECONDS = 30;
+        const SESSION_KEY     = 'iqAdminAuth';
+
+        let failedAttempts = parseInt(sessionStorage.getItem('iqFailedAttempts') || '0');
+        let lockoutEnd     = parseInt(sessionStorage.getItem('iqLockoutEnd') || '0');
+        let lockoutInterval = null;
+
+        // إذا كان مسجل الدخول مسبقاً وجّهه مباشرة
+        if (sessionStorage.getItem(SESSION_KEY) === 'true') {
+            window.location.replace('index.html#admin-panel');
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            updateAttemptDots();
+            const now = Date.now();
+            if (lockoutEnd > now) startLockoutDisplay(Math.ceil((lockoutEnd - now) / 1000));
+        });
+
+        function togglePasswordVisibility() {
+            const input = document.getElementById('passwordInput');
+            const icon  = document.getElementById('eyeIcon');
+            input.type = input.type === 'password' ? 'text' : 'password';
+            icon.className = input.type === 'password' ? 'fas fa-eye' : 'fas fa-eye-slash';
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            if (Date.now() < lockoutEnd) return;
+
+            const pw  = document.getElementById('passwordInput').value;
+            const btn = document.getElementById('loginBtn');
+            const sp  = document.getElementById('loginSpinner');
+            const ic  = document.getElementById('loginIcon');
+            const tx  = document.getElementById('loginBtnText');
+
+            btn.disabled = true;
+            sp.style.display = 'block';
+            ic.style.display = 'none';
+            tx.textContent   = 'جارٍ التحقق...';
+
+            setTimeout(() => {
+                if (pw === ADMIN_PASSWORD) {
+                    sessionStorage.setItem(SESSION_KEY, 'true');
+                    sessionStorage.removeItem('iqFailedAttempts');
+                    sessionStorage.removeItem('iqLockoutEnd');
+                    sp.style.display = 'none';
+                    ic.className = 'fas fa-check';
+                    ic.style.display = 'block';
+                    tx.textContent = 'تم التحقق! جارٍ التحويل...';
+                    btn.style.background = 'linear-gradient(135deg, #00ff87, #00c96a)';
+                    setTimeout(() => window.location.replace('index.html#admin-panel'), 800);
+                } else {
+                    failedAttempts++;
+                    sessionStorage.setItem('iqFailedAttempts', failedAttempts);
+                    btn.disabled = false;
+                    sp.style.display = 'none';
+                    ic.className = 'fas fa-sign-in-alt';
+                    ic.style.display = 'block';
+                    tx.textContent = 'دخول لوحة الإدارة';
+
+                    showError(failedAttempts >= MAX_ATTEMPTS
+                        ? `تم تجاوز ${MAX_ATTEMPTS} محاولات! سيتم إغلاق الدخول مؤقتاً.`
+                        : `كلمة المرور غير صحيحة! تبقى ${MAX_ATTEMPTS - failedAttempts} محاولة.`);
+                    updateAttemptDots();
+
+                    if (failedAttempts >= MAX_ATTEMPTS) {
+                        lockoutEnd = Date.now() + LOCKOUT_SECONDS * 1000;
+                        sessionStorage.setItem('iqLockoutEnd', lockoutEnd);
+                        setTimeout(() => startLockoutDisplay(LOCKOUT_SECONDS), 600);
+                    }
+                    document.getElementById('passwordInput').value = '';
+                }
+            }, 700);
+        }
+
+        function showError(msg) {
+            const el = document.getElementById('errorMsg');
+            document.getElementById('errorText').textContent = msg;
+            el.classList.remove('show');
+            void el.offsetWidth;
+            el.classList.add('show');
+        }
+
+        function updateAttemptDots() {
+            for (let i = 1; i <= MAX_ATTEMPTS; i++) {
+                const d = document.getElementById('dot'+i);
+                if (d) d.classList.toggle('failed', i <= failedAttempts);
+            }
+        }
+
+        function startLockoutDisplay(seconds) {
+            const overlay = document.getElementById('lockoutOverlay');
+            const timer   = document.getElementById('lockoutTimer');
+            overlay.classList.add('show');
+            if (lockoutInterval) clearInterval(lockoutInterval);
+            let rem = seconds;
+            const update = () => {
+                const m = Math.floor(rem/60).toString().padStart(2,'0');
+                const s = (rem%60).toString().padStart(2,'0');
+                timer.textContent = `${m}:${s}`;
+            };
+            update();
+            lockoutInterval = setInterval(() => {
+                rem--;
+                update();
+                if (rem <= 0) {
+                    clearInterval(lockoutInterval);
+                    overlay.classList.remove('show');
+                    failedAttempts = 0; lockoutEnd = 0;
+                    sessionStorage.removeItem('iqFailedAttempts');
+                    sessionStorage.removeItem('iqLockoutEnd');
+                    updateAttemptDots();
+                    document.getElementById('errorMsg').classList.remove('show');
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

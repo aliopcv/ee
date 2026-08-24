@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عراق لايف — IRAQ LIVE | مشاهدة بث مباشر لمباريات اليوم بدون تقطيع</title>
+    <meta name="description" content="موقع عراق لايف (IRAQ LIVE) المنصة الرياضية الأولى لمتابعة مشاهدة البث المباشر لمباريات اليوم بدون تقطيع وبجودة عالية HD و 4K. نتائج مباشرة وتغطية شاملة لكل الدوريات العالمية والعربية.">
+    <meta name="keywords" content="عراق لايف, IRAQ LIVE, بث مباشر, مباريات اليوم, مشاهدة مباريات, بث مباشر بدون تقطيع, الدوري الاسباني, الدوري الانجليزي, دوري ابطال اوروبا, مشاهدة مباراة اليوم">
+    <meta name="author" content="عراق لايف IRAQ LIVE">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <link rel="canonical" href="https://iraqlive.com/">
+
+    <!-- Open Graph / Facebook / WhatsApp SEO -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="عراق لايف - IRAQ LIVE">
+    <meta property="og:title" content="عراق لايف — IRAQ LIVE | مشاهدة بث مباشر لمباريات اليوم بدون تقطيع">
+    <meta property="og:description" content="شاهد مباريات اليوم بث مباشر بجودة عالية HD و 4K بدون تقطيع على موقع عراق لايف المنصة الأولى لمتابعة كرة القدم.">
+    <meta property="og:image" content="logo.png">
+    <meta property="og:url" content="https://iraqlive.com/">
+    <meta property="og:locale" content="ar_IQ">
+
+    <!-- Twitter Card SEO -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="عراق لايف — IRAQ LIVE | مشاهدة بث مباشر لمباريات اليوم بدون تقطيع">
+    <meta name="twitter:description" content="شاهد مباريات اليوم بث مباشر بجودة عالية HD و 4K بدون تقطيع على موقع عراق لايف.">
+    <meta name="twitter:image" content="logo.png">
+
+    <!-- Schema.org Structured Data (JSON-LD) for Search Engine Rich Snippets -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SportsOrganization",
+      "name": "عراق لايف - IRAQ LIVE",
+      "alternateName": ["IRAQ LIVE", "عراق لايف بث مباشر"],
+      "url": "https://iraqlive.com/",
+      "logo": "logo.png",
+      "description": "موقع عراق لايف المنصة الرياضية الأولى لمتابعة مشاهدة البث المباشر لمباريات اليوم بدون تقطيع."
+    }
+    </script>
+
+    <!-- Google Fonts: Cairo & Outfit -->
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- خلفية الحزمة الفلكية والمؤثرات الضوئية -->
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+
+    <!-- الشريط العلوي الاحترافي -->
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="brand">
+                <a href="#" class="logo" onclick="handleSecretLogoClick(event)" title="عراق لايف — IRAQ LIVE">
+                    <img src="logo.png" alt="عراق لايف IRAQ LIVE Logo" class="brand-logo-img">
+                    <span class="logo-iq">عراق</span>
+                    <span class="logo-live">لايف</span>
+                </a>
+                <span class="live-tag"><span class="pulse-dot"></span> بث مباشر</span>
+            </div>
+
+            <!-- شريط البحث السريع -->
+            <div class="search-box">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" id="searchInput" placeholder="ابحث عن مباراة، فريق، أو بطولة..." oninput="handleSearch()">
+                <button class="clear-search" id="clearSearch" onclick="clearSearch()"><i class="fas fa-times"></i></button>
+            </div>
+
+            <div class="nav-actions">
+                <button class="icon-btn theme-toggle" title="وضع الإضاءة" onclick="toggleAmbientGlow()">
+                    <i class="fas fa-lightbulb"></i>
+                </button>
+                <!-- زر الإدارة مخفي - يُفتح عبر النقر 5 مرات على اللوجو -->
+            </div>
+        </div>
+
+        <!-- شريط التصفية والبطولات -->
+        <nav class="leagues-bar">
+            <div class="leagues-container">
+                <button class="filter-chip active" data-filter="all" onclick="filterLeague('all', this)">
+                    <i class="fas fa-globe"></i> جميع المباريات
+                </button>
+                <button class="filter-chip live-chip" data-filter="live" onclick="filterLeague('live', this)">
+                    <i class="fas fa-circle live-dot"></i> مباشر الآن <span class="badge" id="liveBadgeCount">0</span>
+                </button>
+                <button class="filter-chip" data-filter="la-liga" onclick="filterLeague('الدوري الإسباني', this)">
+                    🇪🇸 الدوري الإسباني
+                </button>
+                <button class="filter-chip" data-filter="premier-league" onclick="filterLeague('الدوري الإنجليزي', this)">
+                    🏴󠁧󠁢󠁥󠁮󠁧󠁿 الدوري الإنجليزي
+                </button>
+                <button class="filter-chip" data-filter="champions-league" onclick="filterLeague('دوري أبطال أوروبا', this)">
+                    🏆 دوري أبطال أوروبا
+                </button>
+                <button class="filter-chip" data-filter="serie-a" onclick="filterLeague('الدوري الإيطالي', this)">
+                    🇮🇹 الدوري الإيطالي
+                </button>
+                <button class="filter-chip" data-filter="bundesliga" onclick="filterLeague('الدوري الألماني', this)">
+                    🇩🇪 الدوري الألماني
+                </button>
+                <button class="filter-chip" data-filter="ligue1" onclick="filterLeague('الدوري الفرنسي', this)">
+                    🇫🇷 الدوري الفرنسي
+                </button>
+                <button class="filter-chip" data-filter="saudi-league" onclick="filterLeague('الدوري السعودي', this)">
+                    🇸🇦 الدوري السعودي
+                </button>
+                <button class="filter-chip" data-filter="acl" onclick="filterLeague('دوري أبطال آسيا', this)">
+                    🌏 دوري أبطال آسيا
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- شريط الأخبار والنتائج المباشرة -->
+    <div class="ticker-bar">
+        <div class="ticker-label"><i class="fas fa-bolt"></i> آخر الأخبار</div>
+        <div class="ticker-wrapper">
+            <div class="ticker-content" id="tickerContent">
+                <span>🔥 مرحباً بكم في عراق لايف (IRAQ LIVE) - المنصة الأقوى لمتابعة البث المباشر لمباريات اليوم بأعلى جودة وبدون تقطيع!</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- الواجهة الرئيسية للموقع -->
+    <div id="homeView">
+        <main class="main-wrapper">
+            <!-- قسم المباراة القمة البارزة Spotlight -->
+            <section class="featured-section" id="featuredSection">
+                <div class="featured-match-card" id="featuredMatch">
+                    <!-- تعبئة تلقائية عبر JS -->
+                </div>
+            </section>
+
+            <!-- شبكة المحتوى الرئيسية: مباريات + أخبار -->
+            <div class="content-grid">
+
+                <!-- قائمة مباريات اليوم -->
+                <section class="matches-section">
+                    <div class="section-title-bar">
+                        <div class="title-group">
+                            <h2 id="matchesSectionTitle"><i class="fas fa-trophy highlight-icon"></i> مباريات اليوم</h2>
+                            <span class="sub-title" id="matchesDateText">تغطية مباشرة وشاملة لأهم المواجهات</span>
+                        </div>
+                        <div class="date-filter">
+                            <button class="date-btn" onclick="filterDate('yesterday')">الأمس</button>
+                            <button class="date-btn active" onclick="filterDate('today')">اليوم</button>
+                            <button class="date-btn" onclick="filterDate('tomorrow')">الغد</button>
+                        </div>
+                    </div>
+
+                    <!-- شبكة المباريات -->
+                    <div class="matches-grid" id="matchesGrid">
+                        <!-- يتم تعبئتها بواسطة JS -->
+                    </div>
+
+                    <div class="no-matches" id="noMatches" style="display: none;">
+                        <i class="fas fa-search-minus"></i>
+                        <p>لا توجد مباريات مطابقة للبحث أو الفلتر المحدد حالياً.</p>
+                        <button onclick="resetFilters()" class="reset-btn">عرض جميع المباريات</button>
+                    </div>
+                </section>
+
+                <!-- قسم آخر الأخبار -->
+                <aside class="news-sidebar" id="newsSidebar">
+                    <div class="news-sidebar-header">
+                        <h2><i class="fas fa-newspaper highlight-icon"></i> آخر الأخبار</h2>
+                        <span class="news-live-badge"><span class="pulse-dot"></span> مُحدَّث</span>
+                    </div>
+                    <div class="news-list" id="newsListContainer">
+                        <!-- تعبئة تلقائية عبر JS -->
+                    </div>
+                </aside>
+
+            </div><!-- /content-grid -->
+        </main>
+    </div>
+
+    <!-- الصفحة المخصصة للبث المباشر (Dedicated Watch Page) -->
+    <div id="watchView" class="watch-page-container" style="display: none;">
+        <div class="main-wrapper">
+            <!-- شريط العودة والتنقل Breadcrumb -->
+            <div class="watch-nav-bar">
+                <button class="back-btn" onclick="goHome()">
+                    <i class="fas fa-arrow-right"></i> العودة للقائمة الرئيسية
+                </button>
+                <div class="watch-breadcrumb">
+                    <a href="#" onclick="goHome()">الرئيسية</a> / <span id="watchLeagueBreadcrumb">الدوري الإسباني</span> / <span id="watchTeamsBreadcrumb" class="active-crumb">ريال مدريد vs برشلونة</span>
+                </div>
+            </div>
+
+            <!-- بطاقة النتيجة الحية ومعلومات المباراة -->
+            <div class="watch-scoreboard-card" id="watchScoreboard">
+                <!-- تعبئة عبر JS -->
+            </div>
+
+            <!-- شبكة صفحة البث المباشر (المشغل + القائمة الجانبية) -->
+            <div class="watch-grid">
+                <div class="watch-main-col">
+                    <!-- شريط السيرفرات والجودة -->
+                    <div class="servers-bar dedicated-servers" id="watchServersBar">
+                        <!-- أزرار السيرفرات -->
+                    </div>
+
+                    <!-- شاشة عرض الفيديو البث المباشر -->
+                    <div class="player-screen-wrapper dedicated-player">
+                        <div class="player-screen">
+                            <iframe id="watchStreamFrame" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" scrolling="no" frameborder="0"></iframe>
+                            <div class="screen-overlay" id="watchScreenOverlay">
+                                <div class="loader-spinner"></div>
+                                <p>جاري تحميل البث المباشر بوضوح عالٍ...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- شريط الأدوات والتحكم بالبث -->
+                    <div class="player-actions dedicated-actions">
+                        <div class="player-details">
+                            <span class="info-tag"><i class="fas fa-tv"></i> <span id="watchChannel">beIN Sports HD 1</span></span>
+                            <span class="info-tag"><i class="fas fa-microphone"></i> <span id="watchCommentator">عصام الشوالي</span></span>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="action-btn" onclick="toggleCinemaMode()">
+                                <i class="fas fa-moon"></i> وضع السينما
+                            </button>
+                            <button class="action-btn report" onclick="reportStream()">
+                                <i class="fas fa-exclamation-triangle"></i> إبلاغ عن انقطاع
+                            </button>
+                            <button class="action-btn share" onclick="shareMatch()">
+                                <i class="fas fa-share-alt"></i> مشاركة البث
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- القائمة الجانبية: مباريات أخرى منقولة مباشر -->
+                <div class="watch-sidebar-col">
+                    <div class="sidebar-card">
+                        <h3><i class="fas fa-broadcast-tower highlight-icon"></i> مباريات منقولة الآن 🔴</h3>
+                        <div class="sidebar-matches-list" id="sidebarLiveMatches">
+                            <!-- مباريات البث التنافسية -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة مشغل البث الفاخرة Modal -->
+    <div class="player-modal" id="playerModal">
+        <div class="modal-backdrop" onclick="closePlayer()"></div>
+        <div class="player-dialog">
+            <div class="player-header">
+                <div class="player-match-info">
+                    <span class="live-badge" id="playerLiveBadge"><span class="pulse-dot"></span> مباشر</span>
+                    <h3 id="playerTitle">ريال مدريد vs برشلونة</h3>
+                    <span class="player-league" id="playerLeague">الدوري الإسباني</span>
+                </div>
+                <button class="close-modal-btn" onclick="closePlayer()" title="إغلاق">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <!-- خيارات السيرفرات والجودة -->
+            <div class="servers-bar" id="serversBar">
+                <span class="servers-label"><i class="fas fa-server"></i> اختر السيرفر:</span>
+                <button class="server-btn active" onclick="switchServer(1, this)"><i class="fas fa-bolt"></i> سيرفر 1 (4K)</button>
+                <button class="server-btn" onclick="switchServer(2, this)"><i class="fas fa-video"></i> سيرفر 2 (1080p)</button>
+                <button class="server-btn" onclick="switchServer(3, this)"><i class="fas fa-signal"></i> سيرفر 3 (480p - ضعيف)</button>
+            </div>
+
+            <!-- الشاشة الرئيسية للبث -->
+            <div class="player-screen-wrapper">
+                <div class="player-screen" id="playerScreen">
+                    <iframe id="streamFrame" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" scrolling="no" frameborder="0"></iframe>
+                    <div class="screen-overlay" id="screenOverlay">
+                        <div class="loader-spinner"></div>
+                        <p>جاري تحميل البث المباشر...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- شريط أدوات المشاهدة -->
+            <div class="player-actions">
+                <div class="player-details">
+                    <span class="info-tag"><i class="fas fa-tv"></i> <span id="playerChannel">beIN Sports HD 1</span></span>
+                    <span class="info-tag"><i class="fas fa-microphone"></i> <span id="playerCommentator">عصام الشوالي</span></span>
+                </div>
+                <div class="action-buttons">
+                    <button class="action-btn" onclick="toggleCinemaMode()" id="cinemaBtn">
+                        <i class="fas fa-moon"></i> وضع السينما
+                    </button>
+                    <button class="action-btn report" onclick="reportStream()">
+                        <i class="fas fa-exclamation-triangle"></i> إبلاغ عن انقطاع
+                    </button>
+                    <button class="action-btn share" onclick="shareMatch()">
+                        <i class="fas fa-share-alt"></i> مشاركة
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- مودال عرض الخبر الكامل (News Article Modal) -->
+    <div class="news-modal" id="newsArticleModal">
+        <div class="modal-backdrop" onclick="closeNewsModal()"></div>
+        <div class="news-modal-dialog">
+            <button class="news-modal-close" onclick="closeNewsModal()">
+                <i class="fas fa-times"></i>
+            </button>
+            <img id="newsModalImg" src="" alt="صورة الخبر" class="news-modal-image" style="display: none;">
+            <div class="news-modal-meta">
+                <span id="newsModalCategory" class="news-cat-badge"></span>
+                <span id="newsModalDate" class="news-date"></span>
+            </div>
+            <h2 id="newsModalTitle" class="news-modal-title"></h2>
+            <div id="newsModalBody" class="news-modal-body"></div>
+        </div>
+    </div>
+
+    <!-- لوحة الإدارة (Modal) -->
+    <div class="admin-modal" id="adminModal">
+        <div class="modal-backdrop" onclick="closeAdmin()"></div>
+        <div class="admin-dialog">
+            <div class="admin-header">
+                <div class="admin-title">
+                    <i class="fas fa-user-shield"></i>
+                    <h2>لوحة التحكم والإدارة</h2>
+                </div>
+                <button class="close-modal-btn" onclick="closeAdmin()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <div class="admin-body">
+                <!-- نموذج تسجيل الدخول -->
+                <div class="admin-card login-card" id="loginSection">
+                    <div class="login-icon"><i class="fas fa-lock"></i></div>
+                    <h3>تسجيل الدخول للمشرفين</h3>
+                    <p>يرجى إدخال كلمة المرور للوصول لإدارة المباريات والبث المباشر</p>
+                    <div class="input-group">
+                        <input type="password" id="adminPassword" placeholder="كلمة المرور..." class="styled-input" onkeyup="if(event.key==='Enter') adminLogin()">
+                    </div>
+                    <button onclick="adminLogin()" class="primary-btn flex-btn">
+                        <i class="fas fa-sign-in-alt"></i> دخول اللوحة
+                    </button>
+                </div>
+
+                <!-- لوحة التحكم الإدارية -->
+                <div class="dashboard-section" id="dashboardSection" style="display:none;">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <span class="stat-number" id="totalMatchesCount">0</span>
+                            <span class="stat-label">إجمالي المباريات</span>
+                        </div>
+                        <div class="stat-card live">
+                            <span class="stat-number" id="adminLiveCount">0</span>
+                            <span class="stat-label">مباشر الان</span>
+                        </div>
+                    </div>
+
+
+                    <div class="admin-form-card" id="adminFormCard">
+                        <h3><i class="fas fa-plus-circle" id="formCardTitleIcon"></i> <span id="formCardTitle">إضافة مباراة جديدة</span></h3>
+                        <div class="form-grid">
+                            <div class="input-field">
+                                <label>الفريق المضيف</label>
+                                <input type="text" id="matchHomeTeam" placeholder="مثال: ريال مدريد" class="styled-input">
+                            </div>
+                            <div class="input-field">
+                                <label><i class="fas fa-image"></i> شعار الفريق المضيف (اختيار ملف من الكمبيوتر)</label>
+                                <div class="file-uploader-box">
+                                    <input type="file" id="matchHomeLogoFile" accept="image/*" class="styled-file-input" onchange="handleLogoFileSelect(this, 'matchHomeLogoPreview', 'home')">
+                                    <div class="file-preview-wrap">
+                                        <img id="matchHomeLogoPreview" class="logo-preview-img" style="display:none;" alt="معاينة الشعار">
+                                        <input type="url" id="matchHomeLogo" placeholder="أو أدخل رابط الشعار (https://...)" class="styled-input logo-url-input">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-field">
+                                <label>الفريق الضيف</label>
+                                <input type="text" id="matchAwayTeam" placeholder="مثال: برشلونة" class="styled-input">
+                            </div>
+                            <div class="input-field">
+                                <label><i class="fas fa-image"></i> شعار الفريق الضيف (اختيار ملف من الكمبيوتر)</label>
+                                <div class="file-uploader-box">
+                                    <input type="file" id="matchAwayLogoFile" accept="image/*" class="styled-file-input" onchange="handleLogoFileSelect(this, 'matchAwayLogoPreview', 'away')">
+                                    <div class="file-preview-wrap">
+                                        <img id="matchAwayLogoPreview" class="logo-preview-img" style="display:none;" alt="معاينة الشعار">
+                                        <input type="url" id="matchAwayLogo" placeholder="أو أدخل رابط الشعار (https://...)" class="styled-input logo-url-input">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-field">
+                                <label>البطولة / الدوري</label>
+                                <select id="matchLeague" class="styled-input" onchange="toggleCustomLeagueInput(this)">
+                                    <option value="الدوري الإسباني" selected>🇪🇸 الدوري الإسباني</option>
+                                    <option value="الدوري الإنجليزي">🏴󠁧󠁢󠁥󠁮󠁧󠁿 الدوري الإنجليزي</option>
+                                    <option value="دوري أبطال أوروبا">🏆 دوري أبطال أوروبا</option>
+                                    <option value="الدوري الإيطالي">🇮🇹 الدوري الإيطالي</option>
+                                    <option value="الدوري الألماني">🇩🇪 الدوري الألماني</option>
+                                    <option value="الدوري الفرنسي">🇫🇷 الدوري الفرنسي</option>
+                                    <option value="الدوري السعودي">🇸🇦 الدوري السعودي</option>
+                                    <option value="دوري أبطال آسيا">🌏 دوري أبطال آسيا</option>
+                                    <option value="كأس ملك إسبانيا">🏆 كأس ملك إسبانيا</option>
+                                    <option value="كأس الاتحاد الإنجليزي">🏆 كأس الاتحاد الإنجليزي</option>
+                                    <option value="custom">➕ بطولة أخرى (إدخال يدوياً)...</option>
+                                </select>
+                                <input type="text" id="customMatchLeague" placeholder="اكتب اسم البطولة المخصصة..." class="styled-input" style="display: none; margin-top: 8px;">
+                            </div>
+                            <div class="input-field">
+                                <label>توقيت المباراة</label>
+                                <input type="datetime-local" id="matchTime" class="styled-input">
+                            </div>
+                            <div class="input-field">
+                                <label>القناة الناقلة</label>
+                                <input type="text" id="matchChannel" placeholder="مثال: beIN Sports HD 1" class="styled-input">
+                            </div>
+                            <div class="input-field">
+                                <label>المعلق الرياضي</label>
+                                <input type="text" id="matchCommentator" placeholder="مثال: عصام الشوالي" class="styled-input">
+                            </div>
+                            <div class="input-field">
+                                <label><i class="fas fa-signal"></i> حالة المباراة</label>
+                                <select id="matchStatus" class="styled-input">
+                                    <option value="upcoming">⏳ قريباً (لم تبدأ بعد)</option>
+                                    <option value="live" selected>🔴 مباشر (بداية المباراة)</option>
+                                    <option value="finished">🏁 انتهت المباراة</option>
+                                </select>
+                            </div>
+                            <div class="input-field">
+                                <label><i class="fas fa-calendar-alt"></i> التبويب الزمني (اليوم / الأمس / الغد)</label>
+                                <select id="matchDateCategory" class="styled-input">
+                                    <option value="today" selected>📅 مباريات اليوم</option>
+                                    <option value="yesterday">⏪ مباريات الأمس</option>
+                                    <option value="tomorrow">⏩ مباريات الغد</option>
+                                </select>
+                            </div>
+                            <div class="input-field full-width">
+                                <label>رابط البث المباشر (Iframe Embed URL)</label>
+                                <input type="url" id="matchStreamUrl" placeholder="https://..." class="styled-input">
+                            </div>
+                            <div class="input-field checkbox-field full-width">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="matchIsFeatured">
+                                    <span>تعيين كـ مباراة قمة اليوم المميزة ⭐</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 15px;">
+                            <button onclick="addMatch()" id="submitMatchBtn" class="primary-btn flex-btn add-match-btn" style="flex: 2; margin-top: 0;">
+                                <i class="fas fa-plus"></i> إضافة المباراة فوراً
+                            </button>
+                            <button onclick="cancelMatchEdit()" id="cancelEditBtn" class="delete-match-btn flex-btn" style="flex: 1; padding: 12px; font-weight: bold; border-radius: var(--radius-sm); display: none;">
+                                <i class="fas fa-times"></i> إلغاء التعديل
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="admin-matches-list-card">
+                        <h3><i class="fas fa-list"></i> إدارة المباريات الحالية والنتائج المباشرة</h3>
+                        <div class="matches-manage-list" id="adminMatchesList"></div>
+                    </div>
+
+                    <!-- ====== قسم إدارة الأخبار ====== -->
+                    <div class="admin-news-card">
+                        <h3><i class="fas fa-newspaper highlight-icon"></i> إضافة خبر جديد</h3>
+                        <div class="news-form-grid">
+                            <div class="input-field full-width">
+                                <label>عنوان الخبر</label>
+                                <input type="text" id="newsTitle" placeholder="مثال: ريال مدريد يتعاقد مع نجم جديد..." class="styled-input">
+                            </div>
+                            <div class="input-field full-width">
+                                <label>نص الخبر</label>
+                                <textarea id="newsBody" rows="4" placeholder="اكتب تفاصيل الخبر هنا..." class="styled-input news-textarea"></textarea>
+                            </div>
+                            <div class="input-field">
+                                <label>صورة الخبر (اختياري)</label>
+                                <div class="file-upload-wrapper">
+                                    <input type="file" id="newsFileInput" accept="image/*" onchange="handleNewsFileSelect(this)" style="display: none;">
+                                    <label for="newsFileInput" class="custom-file-btn">
+                                        <i class="fas fa-image"></i> اختر صورة من الجهاز
+                                    </label>
+                                    <button type="button" id="removeNewsImgBtn" class="remove-img-btn" onclick="removeNewsImage()" style="display: none;">
+                                        <i class="fas fa-times"></i> إزالة الصورة
+                                    </button>
+                                </div>
+                                <div class="file-preview-container">
+                                    <img id="newsImagePreview" src="" alt="معاينة الصورة" class="file-preview-img" style="display: none;">
+                                </div>
+                            </div>
+                            <div class="input-field">
+                                <label>تصنيف الخبر</label>
+                                <select id="newsCategory" class="styled-input">
+                                    <option value="عاجل">🔴 عاجل</option>
+                                    <option value="انتقالات" selected>🔄 انتقالات</option>
+                                    <option value="مباريات">⚽ مباريات</option>
+                                    <option value="إصابات">🩹 إصابات</option>
+                                    <option value="تصريحات">🎙️ تصريحات</option>
+                                    <option value="أخرى">📰 أخرى</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:15px;">
+                            <button onclick="addNews()" id="submitNewsBtn" class="primary-btn flex-btn" style="flex:2;margin-top:0;">
+                                <i class="fas fa-plus"></i> نشر الخبر
+                            </button>
+                            <button onclick="cancelNewsEdit()" id="cancelNewsEditBtn" class="delete-match-btn flex-btn" style="flex:1;padding:12px;font-weight:bold;border-radius:var(--radius-sm);display:none;">
+                                <i class="fas fa-times"></i> إلغاء
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- قائمة الأخبار المضافة -->
+                    <div class="admin-matches-list-card">
+                        <h3><i class="fas fa-list"></i> الأخبار المنشورة <span id="adminNewsCount" style="font-size:12px;color:var(--text-secondary);margin-right:8px;"></span></h3>
+                        <div class="matches-manage-list" id="adminNewsList"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- التنبيهات المنبثقة Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <div class="logo">
+                    <img src="logo.png" alt="عراق لايف IRAQ LIVE Logo" class="footer-logo-img">
+                    <span class="logo-iq">عراق</span>
+                    <span class="logo-live">لايف</span>
+                </div>
+                <p>موقع عراق لايف (IRAQ LIVE) يقدم مشاهدة بث مباشر لمباريات اليوم بدون تقطيع وبجودات متعددة تناسب جميع سرعات الإنترنت.</p>
+            </div>
+            <div class="footer-links">
+                <a href="#"><i class="fas fa-shield-alt"></i> سياسة الخصوصية</a>
+                <a href="#"><i class="fas fa-headset"></i> اتصل بنا</a>
+                <a href="#"><i class="fas fa-paper-plane"></i> قناة التليجرام</a>
+            </div>
+            <div class="footer-copy">
+                &copy; 2026 عراق لايف — IRAQ LIVE. جميع الحقوق محفوظة.
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
